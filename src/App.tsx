@@ -1,25 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import * as React from "react";
+import axios from "axios";
+import "./App.css";
+import { Map } from "./components/Map";
+import { Detail } from "./components/Detail";
+import { KostContext } from "./context/kost";
+import { Kost } from "./interfaces/Kost";
+
+axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
 
 function App() {
+  const [kost, setKost] = React.useState<Kost | null>(null);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <KostContext.Provider value={{ kost, setKost }}>
+      <div className="app">
+        <div className="left-content">
+          <header className="app-header">
+            <h1>GIS - Kost Bali</h1>
+          </header>
+          <Map />
+        </div>
+        <Detail />
+      </div>
+    </KostContext.Provider>
   );
 }
 
